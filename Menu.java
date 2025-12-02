@@ -18,7 +18,7 @@ public class Menu {
         do {
             System.out.println();
             System.out.println("Screening COVID-19");
-            System.out.println("====================");
+            System.out.println("=======================");
             System.out.println("1.Daftar Seluruh Pasien");
             System.out.println("2.Input Gejala");
             System.out.println("3.Edit Data");
@@ -59,7 +59,7 @@ public class Menu {
                     Patient p = new Patient();
                     System.out.println();
                     System.out.println("Pendaftaran Pasien Baru");
-                    System.out.println("==================");
+                    System.out.println("=======================");
                     System.out.print("Nama: ");
                     p.nama = sc.nextLine();
                     System.out.print("Nomor Telp: ");
@@ -71,10 +71,37 @@ public class Menu {
                     data[jumlahPasien] = p;
                     jumlahPasien++;
                 } else if (pilihan == 3) {
-                    
+                    System.out.println();
+                    System.out.println("Edit Data Pasien");
+                    System.out.println("=======================");
+                    System.out.print("Nama lengkap pasien: ");
+                    String cariNama = sc.nextLine();
+                    int idx = cariIndex(data, jumlahPasien, cariNama);
+                    if (idx == -1) {
+                        System.out.println("Pasien tidak ditemukan");
+                    } else {
+                        System.out.println("=======================");
+                        System.out.println("Mau Edit Apa?");
+                        System.out.println("1. Data Pasien");
+                        System.out.println("2. Gejala");
+                        System.out.println("3. Back");
+                        System.out.println("=======================");
+                        System.out.print("Pilih: ");
+                        int editPilih = sc.nextInt();
+                        if (editPilih == 1) {
+                            
+                        } else if (editPilih == 2) {
+                            
+                        } else if (editPilih == 3) {
+                            continue;
+                        } else {
+                            System.out.println("Pilihan tidak sesuai!");
+                        }
+                    }
                 } else if (pilihan == 4) {
                     System.out.println("\nHapus Data Pasien");
-                    System.out.print("Masukkan nama pasien: ");
+                    System.out.println("=======================");
+                    System.out.print("Masukkan nama lengkap pasien: ");
                     String cariNama = sc.nextLine();
 
                     int idx = cariIndex(data, jumlahPasien, cariNama);
@@ -93,13 +120,16 @@ public class Menu {
                 } else if (pilihan == 5) {
                     
                 } else if (pilihan == 6) {
+                    System.out.println("=======================");
+                    System.out.println("Terimakasih!");
+                    System.out.println("=======================");
                     System.exit(0);
                 }
             } else {
                 System.out.println();
-                System.out.println("==================");
+                System.out.println("=======================");
                 System.out.println("Pilih yang sesuai!");
-                System.out.println("==================");
+                System.out.println("=======================");
             }
         } while (true);
     }
