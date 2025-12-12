@@ -1,100 +1,6 @@
 import java.util.Scanner;
 
 public class Menu {
-    static int cariIndex(Patient[] data, int jumlah, String nama) {
-        for (int i = 0; i < jumlah; i++) {
-            if (data[i].nama.equalsIgnoreCase(nama)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    static void daftarPasien(Patient[] data, int jumlahPasien) {
-        System.out.println();
-        System.out.println("+------+----------------------+----------------------+----------------------+----------------------+");
-        System.out.printf("| %-4s | %-20s | %-20s | %-20s | %-20s |\n", 
-        "No", "Nama", "Nomor Telp", "Alamat", "Email");
-        System.out.println("+------+----------------------+----------------------+----------------------+----------------------+");
-        if (jumlahPasien > 0) {
-            for (int i = 0; i < jumlahPasien; i++) {
-                System.out.printf("| %-4d | %-20s | %-20s | %-20s | %-20s |\n",
-                (i + 1),
-                data[i].nama,
-                data[i].notelp,
-                data[i].alamat,
-                data[i].email
-                );
-            }
-        } else {
-            String teks = "Data Kosong!";
-            System.out.printf("| %-96s |\n", 
-                String.format("%" + ((94 + teks.length()) / 2) + "s", teks)
-            );
-        }
-        System.out.println("+------+----------------------+----------------------+----------------------+----------------------+");
-    }
-
-    static void daftarPasienByScreening( Patient[] data, int jumlahPasien, String hasilScreening) {
-        System.out.println();
-        System.out.println("+------+----------------------+----------------------+----------------------+----------------------+----------------------+");
-        System.out.printf("| %-4s | %-20s | %-20s | %-20s | %-20s | %-20s |\n", 
-        "No", "Nama", "Nomor Telp", "Alamat", "Email", "Hasil Screening");
-        System.out.println("+------+----------------------+----------------------+----------------------+----------------------+----------------------+");
-        boolean found = false;
-        for (int i = 0; i < jumlahPasien; i++) {
-            if (data[i].hasil.equals(hasilScreening)) {
-                found = true;
-                System.out.printf("| %-4d | %-20s | %-20s | %-20s | %-20s | %-20s |\n",
-                (i + 1),
-                data[i].nama,
-                data[i].notelp,
-                data[i].alamat,
-                data[i].email,
-                data[i].hasil
-                );
-            }
-        }
-        if (!found) {
-            String teks = "Data Kosong!";
-            System.out.printf("| %-116s |\n", 
-                String.format("%" + ((114 + teks.length()) / 2) + "s", teks)
-            );
-        }
-        System.out.println("+------+----------------------+----------------------+----------------------+----------------------+----------------------+");
-    }
-
-    static String screening(Patient p) {
-        Gejala g = p.gejala;
-
-        int jumlahGejala = 0;
-        if (g.demam) jumlahGejala++;
-        if (g.batuk) jumlahGejala++;
-        if (g.sesak) jumlahGejala++;
-        if (g.sakitKepala) jumlahGejala++;
-        if (g.sakitTenggorokan) jumlahGejala++;
-        if (g.mudahLelah) jumlahGejala++;
-
-        if (g.demam && g.batuk && g.sesak && g.pernahKontak) {
-            p.isolasi = true;
-            return "Terkonfirmasi";
-        }
-        if (g.pernahKontak) {
-            return "Kontak Erat";
-        }
-        if (g.pernahKontak && (g.demam || g.batuk || g.sesak)) {
-            return "Probable";
-        }
-        if (jumlahGejala >= 3) {
-            return "Suspect";
-        }
-        if (jumlahGejala == 0) {
-            return "Negatif";
-        }
-
-        return "Suspect"; 
-    }
-
     public static void main (String[] args) {
         Patient[] data = new Patient[100];
         int jumlahPasien = 0;
@@ -117,7 +23,7 @@ public class Menu {
 
             if (pilihan >= 1 && pilihan <= 7) {
                 if (pilihan == 1) {
-                    daftarPasien(data, jumlahPasien);
+                    PatientManager.daftarPasien(data, jumlahPasien);
                 } else if (pilihan == 2) {
                     Patient p = new Patient();
                     System.out.println();
@@ -141,7 +47,7 @@ public class Menu {
                     g.pernahKontak = Helper.inputYN(sc, "Pernah Kontak Kasus Positif (y/n): ");
 
                     p.gejala = g;
-                    p.hasil = screening(p);
+                    p.hasil = Patient.screening(p);
 
                     data[jumlahPasien] = p;
                     jumlahPasien++;
@@ -155,7 +61,7 @@ public class Menu {
                     System.out.print("Nama lengkap pasien: ");
                     String cariNama = sc.nextLine();
 
-                    int idx = cariIndex(data, jumlahPasien, cariNama);
+                    int idx = PatientManager.cariIndex(data, jumlahPasien, cariNama);
 
                     if (idx == -1) {
                         System.out.println("Pasien tidak ditemukan");
@@ -218,7 +124,7 @@ public class Menu {
                             g.sakitTenggorokan = Helper.inputYN(sc, "Sakit tenggorokan (y/n): ");
                             g.mudahLelah = Helper.inputYN(sc, "Mudah lelah (y/n): ");
                             g.pernahKontak = Helper.inputYN(sc, "Pernah kontak kasus positif (y/n): ");
-                            p.hasil = screening(p);
+                            p.hasil = Patient.screening(p);
 
                             System.out.println("Gejala berhasil diperbarui.");
                         }
@@ -237,7 +143,7 @@ public class Menu {
                     System.out.print("Masukkan nama lengkap pasien: ");
                     String cariNama = sc.nextLine();
 
-                    int idx = cariIndex(data, jumlahPasien, cariNama);
+                    int idx = PatientManager.cariIndex(data, jumlahPasien, cariNama);
 
                     if (idx == -1) {
                         System.out.println("Pasien tidak ditemukan");
@@ -263,13 +169,13 @@ public class Menu {
                     sc.nextLine();
                     if (hasilPilih >= 1 && hasilPilih <= 4) {
                         if (hasilPilih == 1) {
-                            daftarPasienByScreening(data, jumlahPasien, "Probable");
+                            PatientManager.daftarPasienByScreening(data, jumlahPasien, "Probable");
                         } else if (hasilPilih == 2) {
-                            daftarPasienByScreening(data, jumlahPasien, "Suspect");
+                            PatientManager.daftarPasienByScreening(data, jumlahPasien, "Suspect");
                         } else if (hasilPilih == 3) {
-                            daftarPasienByScreening(data, jumlahPasien, "Kontak Erat");
+                            PatientManager.daftarPasienByScreening(data, jumlahPasien, "Kontak Erat");
                         } else if (hasilPilih == 4) {
-                            daftarPasienByScreening(data, jumlahPasien, "Terkonfirmasi");
+                            PatientManager.daftarPasienByScreening(data, jumlahPasien, "Terkonfirmasi");
                         }
                     } else {
                         System.out.println();
