@@ -3,13 +3,7 @@ public class Patient {
     String notelp;
     String alamat;
     String email;
-    boolean demam;
-    boolean sesak;
-    boolean batuk;
-    boolean Sakit_Kepala;
-    boolean Sakit_Tenggorokan;
-    boolean mudah_lelah;
-    boolean pernahkontak;
+    Gejala gejala;
     String hasil;
     boolean isolasi;
 }
