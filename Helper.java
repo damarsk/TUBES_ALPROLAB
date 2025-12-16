@@ -23,4 +23,11 @@ public class Helper {
             System.out.println("Input tidak boleh kosong.");
         }
     }
+
+    public static void msgFormat(String msg) {
+        System.out.println();
+        System.out.println("=======================");
+        System.out.println(msg);
+        System.out.println("=======================");
+    }
 }

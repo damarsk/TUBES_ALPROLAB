@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class PatientManager {
     static int cariIndex(Patient[] data, int jumlah, String nama) {
         for (int i = 0; i < jumlah; i++) {
