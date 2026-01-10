@@ -11,6 +11,15 @@ public class PatientManager {
     }
 
     static void daftarPasien(Patient[] data, int jumlahPasien) {
+        for (int i = 0; i < jumlahPasien - 1; i++) {
+            for (int j = 0; j < jumlahPasien - i - 1; j++) {
+                if (data[j].nama.compareToIgnoreCase(data[j + 1].nama) > 0) {
+                    Patient temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
+                }
+            }
+        }
         System.out.println();
         System.out.println("+------+----------------------+----------------------+----------------------+----------------------+");
         System.out.printf("| %-4s | %-20s | %-20s | %-20s | %-20s |\n", 
